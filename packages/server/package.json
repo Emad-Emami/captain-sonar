@@ -1,0 +1,26 @@
+{
+  "name": "@cs/server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev:wss && npm run dev:watch",
+    "dev:watch": "tsx --env-file=.env watch ./src",
+    "dev:wss": "tsx --env-file=.env ./src/system/ws/ws.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.20.0",
+    "@trpc/server": "^11.0.0-rc.502",
+    "lodash-es": "^4.17.21",
+    "redis": "^4.7.0",
+    "ws": "^8.18.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^22.5.4",
+    "@types/ws": "^8.5.12"
+  },
+  "author": "Emad Emami",
+  "type": "module",
+  "license": "ISC"
+}

@@ -1,0 +1,332 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("SERVER_DATABASE_URL")
+}
+
+model Player {
+  id         String       @id @default(dbgenerated("nanoid(16)")) @db.VarChar(16)
+  name       String       @db.VarChar(255)
+  crewMember CrewMember[]
+  battles    Battle[]     @relation("battlePlayers")
+
+  @@map("players")
+}
+
+model Battle {
+  id               String            @id @default(dbgenerated("nanoid(16)")) @db.VarChar(16)
+  createdAt        DateTime          @unique @default(now())
+  createdBy        String
+  updatedAt        DateTime          @updatedAt
+  status           BattleStatus      @default(PREPARING)
+  battleSubmarines BattleSubmarine[]
+  map              Map               @relation(fields: [mapId], references: [id])
+  mapId            String
+  event            Event[]
+  players          Player[]          @relation("battlePlayers")
+
+  @@map("battles")
+}
+
+enum BattleStatus {
+  PREPARING
+  READY
+  ONGOING
+  CANCELLED
+  DONE
+  ARCHIVED
+}
+
+model Submarine {
+  id              String            @id @default(dbgenerated("nanoid(16)")) @db.VarChar(16)
+  name            String            @unique
+  battles         String[]
+  breakdownPlan   BreakdownPlan     @relation(fields: [breakdownPlanId], references: [id])
+  breakdownPlanId String
+  battleSubmarine BattleSubmarine[]
+
+  @@map("submarines")
+}
+
+model BattleSubmarine {
+  id                           String                         @id @default(dbgenerated("nanoid(16)")) @db.VarChar(16)
+  battle                       Battle                         @relation(fields: [battleId], references: [id])
+  battleId                     String
+  submarine                    Submarine                      @relation(fields: [submarineId], references: [id])
+  submarineId                  String
+  crew                         CrewMember[]
+  battleSubmarinePath          BattleSubmarinePath?           @relation(fields: [battleSubmarinePathId], references: [id])
+  battleSubmarinePathId        String?
+  status                       BattleSubmarinStatus           @default(UNCOMISSIONED)
+  outstandingActions           OutstandingActionTypes[]
+  hitPoints                    Int                            @default(4)
+  /// [BattleSubmarinesPermissions]
+  permissions                  Json?
+  battleSubmarinePositionPoint BattleSubmarinePositionPoint[]
+  events                       Event[]
+
+  @@map("battleSubmarines")
+}
+
+model BattleSubmarinePositionPoint {
+  id                      String              @id @default(uuid())
+  sequence                Int
+  x                       Int
+  y                       Int
+  battleSubmarine         BattleSubmarine     @relation(fields: [battleSubmarinId], references: [id])
+  battleSubmarinId        String
+  battleSubmarinePath     BattleSubmarinePath @relation(fields: [battleSubmarinePathId], references: [id])
+  battleSubmarinePathId   String
+  fromNavgateActionEvents ActionEvent[]       @relation("fromNavigateActionEvent")
+  toNavgateActionEvents   ActionEvent[]       @relation("toNavigateActionEvent")
+
+  @@map("battleSubmarinePositionPoints")
+}
+
+model BattleSubmarinePath {
+  id                           String                         @id @default(uuid())
+  battleSubmarinePositionPoint BattleSubmarinePositionPoint[]
+  battleSubmarine              BattleSubmarine[]
+  ActionEvent                  ActionEvent[]
+
+  @@map("battleSubmarinePaths")
+}
+
+enum BattleSubmarinStatus {
+  UNCOMISSIONED
+  ABANDON
+  IDLE
+  NAVIGATING
+  SURFACED
+  VICTORY
+  SUNK
+}
+
+enum ActionType {
+  NAVIGATE
+  LOAD_OPERATIVE_SYSTEM
+  SET_BREAKDOWN
+  REACT
+  DIVE
+  SURFACE
+  ACTIVATE_OPERATIVE_SYSTEM
+  TARGET_LOCKED
+}
+
+enum OutstandingActionTypes {
+  LOAD_OPERATIVE_SYSTEM
+  SET_BREAKDOWN
+}
+
+model CrewMember {
+  player            Player          @relation(fields: [playerId], references: [id])
+  playerId          String
+  battleSubmarine   BattleSubmarine @relation(fields: [battleSubmarineId], references: [id])
+  battleSubmarineId String
+  role              CrewMemberRole
+
+  @@id([playerId, battleSubmarineId])
+  @@map("crewMembers")
+}
+
+enum CrewMemberRole {
+  CAPTAIN
+  FIRST_MATE
+  ENGINEER
+  RADIO_OPERATOR
+}
+
+model BreakdownPlan {
+  id             String           @id @default(uuid())
+  submarine      Submarine[]
+  breakdownPoint BreakdownPoint[]
+
+  @@map("breakpointPlans")
+}
+
+model BreakdownPoint {
+  id                String             @id @default(uuid())
+  navigationSection Course
+  wire              CircuitWire?
+  systemType        SystemCategoryType
+  number            Int
+  breakdownPlan     BreakdownPlan      @relation(fields: [breakdownPlanId], references: [id])
+  breakdownPlanId   String
+  ActionEvent       ActionEvent[]
+
+  @@map("breakdownPoints")
+}
+
+enum Course {
+  NORTH
+  SOUTH
+  EAST
+  WEST
+}
+
+enum CircuitWire {
+  A
+  B
+  C
+}
+
+enum SystemCategoryType {
+  WEAPON
+  DETECTION
+  SPECIAL
+  POWER
+}
+
+model Map {
+  id     String        @id @default(dbgenerated("nanoid(16)")) @db.VarChar(16)
+  name   String        @db.VarChar(200)
+  width  Int           @default(15)
+  height Int           @default(15)
+  grids  MapGridCell[]
+  battle Battle[]
+
+  @@map("maps")
+}
+
+model MapGridCell {
+  id                  String  @id @default(uuid())
+  map                 Map     @relation(fields: [mapId], references: [id])
+  mapId               String
+  x                   Int
+  y                   Int
+  navigable           Boolean
+  /// [MapGridCellCoursesNavigability]
+  coursesNavigability Json
+
+  @@map("mapGridCells")
+}
+
+model Event {
+  id                String          @id @default(uuid())
+  createdAt         DateTime        @unique @default(now())
+  type              EventType
+  battle            Battle          @relation(fields: [battleId], references: [id])
+  battleId          String
+  battleSubmarine   BattleSubmarine @relation(fields: [battleSubmarineId], references: [id])
+  battleSubmarineId String
+
+  // CTI mapping
+  action ActionEvent?
+  report ReportEvent?
+
+  @@map("events")
+}
+
+enum EventType {
+  REPORT
+  ACTION
+}
+
+model ActionEvent {
+  event   Event           @relation(fields: [eventId], references: [id])
+  eventId String          @unique
+  type    ActionEventType
+
+  // Navigate
+  course                           Course?
+  fromBattleSubmarinePositionPoint BattleSubmarinePositionPoint? @relation(name: "fromNavigateActionEvent", fields: [from], references: [id])
+  from                             String?
+  toBattleSubmarinePositionPoint   BattleSubmarinePositionPoint? @relation(name: "toNavigateActionEvent", fields: [to], references: [id])
+  to                               String?
+
+  // Load or activate operative system
+  system OperativeSystemType?
+
+  // Set breakdown
+  breakdownPoint   BreakdownPoint? @relation(fields: [breakdownPointId], references: [id])
+  breakdownPointId String?
+
+  // Lock target
+  battleSubmarinePath   BattleSubmarinePath? @relation(fields: [battleSubmarinePathId], references: [id])
+  battleSubmarinePathId String?
+
+  @@map("actionEvents")
+}
+
+enum SystemType {
+  TORPEDO
+  MINE
+  SONAR
+  DRONE
+  SILENT
+  SCENARIO
+  REACTOR
+}
+
+enum WeaponSystemType {
+  TORPEDO
+  MINE
+}
+
+enum DetectionSystemType {
+  SONAR
+  DRONE
+}
+
+enum SpecialSystemType {
+  SILENT
+  SCENARIO
+}
+
+enum PowerSystem {
+  REACTOR
+}
+
+enum OperativeSystemType {
+  TORPEDO
+  MINE
+  SONAR
+  DRONE
+  SILENT
+  SCENARIO
+}
+
+enum ActionEventType {
+  NAVIGATE
+  LOAD_OPERATIVE_SYSTEM
+  SET_BREAKDOWN
+  DIVE
+  SURFACE
+  ACTIVATE_OPERATIVE_SYSTEM
+  TARGET_LOCKED
+}
+
+model ReportEvent {
+  event   Event      @relation(fields: [eventId], references: [id])
+  eventId String     @unique
+  type    ReportType
+
+  // Explosion
+  weaponSystem WeaponSystemType?
+
+  // Detection
+  detectionSystem DetectionSystemType?
+
+  // Navigation breakdown
+  course Course?
+
+  @@map("reportEvents")
+}
+
+enum ReportType {
+  EXPLOSION
+  DETECTION
+  NAVIGATION_BREAKDOWN
+  SUBMARINE_QUIT
+  CONNECTION_ISSUE
+}

@@ -1,0 +1,52 @@
+# dependencies
+/node_modules
+**/node_modules
+
+# IDE
+**/.vscode
+
+# testing
+/coverage
+
+.DS_Store
+
+# environment
+.env
+
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# next.js
+**/.next/
+**/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# turbo
+.turbo
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
