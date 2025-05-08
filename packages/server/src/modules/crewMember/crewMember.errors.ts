@@ -1,9 +1,9 @@
-import { TRPCError } from "@trpc/server";
+import { ServerError, HttpErrorCode } from "@CS/server/system/error";
 
-export class DifferentBattleIdsError extends TRPCError {
+export class DifferentBattleIdsError extends ServerError {
   constructor() {
     super({
-      code: "BAD_REQUEST",
+      code: HttpErrorCode.BadRequest,
       message: "BattleSubmarines must belong to the same battle"
     });
   }

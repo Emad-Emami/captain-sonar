@@ -3,10 +3,6 @@
   "globalDependencies": ["tsconfig.json"],
   "ui": "tui",
   "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**"]
-    },
     "check-types": {
       "dependsOn": ["^check-types"]
     },
@@ -18,7 +14,27 @@
       "persistent": true,
       "cache": false
     },
-    "migrate": {
+    "migrate-dev": {
+      "interactive": true,
+      "cache": false
+    },
+    "migrate-deploy": {
+      "interactive": true,
+      "cache": false
+    },
+    "push": {
+      "persistent": false,
+      "cache": false
+    },
+    "pull": {
+      "persistent": false,
+      "cache": false
+    },
+    "seed": {
+      "persistent": false,
+      "cache": false
+    },
+    "validate": {
       "interactive": true,
       "cache": false
     }

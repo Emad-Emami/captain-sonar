@@ -3,20 +3,21 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "migrate": "prisma migrate dev",
+    "migrate-dev": "prisma migrate dev",
+    "migrate-deploy": "prisma migrate deploy",
     "push": "prisma db push",
+    "pull": "prisma db pull",
     "seed": "prisma db seed",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "validate": "prisma validate"
   },
   "devDependencies": {
     "prisma": "^5.20.0",
-    "prisma-json-types-generator": "^3.0.4",
-    "ts-node": "^10.9.2"
+    "prisma-json-types-generator": "^3.0.4"
   },
   "prisma": {
-    "seed": "ts-node -r tsconfig-paths/register --compiler-options {\"module\":\"CommonJS\"} prisma/seeds/index.ts"
+    "seed": "tsx seeds/index.ts"
   },
   "author": "Emad Emami",
-  "type": "module",
   "license": "ISC"
 }

@@ -3,14 +3,19 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev:server": "turbo dev -F=@cs/server",
-    "dev:web": "turbo dev -F=@cs/web",
-    "dev": "turbo dev -F=@cs/web",
-    "db:generate": "turbo generate -F=@cs/db",
-    "db:migrate": "turbo migrate -F=@cs/db",
-    "db:migrate-create-only": "turbo migrate --only -F=@cs/db -- --create-only",
-    "db:migrate-reset": "turbo migrate --only -F=@cs/db -- --reset",
-    "db:migrate-force-reset": "turbo migrate --only -F=@cs/db -- --force-reset",
+    "dev:server": "turbo run dev --filter=@cs/server",
+    "dev:web": "turbo run dev --filter=@cs/web",
+    "dev": "turbo run dev --filter=@cs/web",
+    "db:validate": "turbo run validate --filter=@cs/db",
+    "db:generate": "turbo run generate --filter=@cs/db",
+    "db:push": "turbo run push --filter=@cs/db",
+    "db:pull": "turbo run pull --filter=@cs/db",
+    "db:seed": "turbo run seed --filter=@cs/db",
+    "db:migrate-dev": "turbo run migrate-dev --filter=@cs/db",
+    "db:migrate-deploy": "turbo run migrate-deploy --filter=@cs/db",
+    "db:migrate-create-only": "turbo run migrate --only --filter=@cs/db -- --create-only",
+    "db:migrate-reset": "turbo run migrate --only --filter=@cs/db -- --reset",
+    "db:migrate-force-reset": "turbo run migrate --only --filter=@cs/db -- --force-reset",
     "lint": "eslint --ext \".js,.ts,.tsx\" --report-unused-disable-directives */*.ts"
   },
   "workspaces": [
@@ -46,7 +51,6 @@
     "jest-environment-jsdom": "^29.7.0",
     "prettier": "^3.3.3",
     "ts-jest": "^29.2.5",
-    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.0",
     "turbo": "^2.2.3",
     "typescript": "5.5.4",
@@ -57,9 +61,7 @@
     "@CS/server": "./packages/server/src/*",
     "@CS/db": "./packages/db/*"
   },
-  "dependencies": {
-    "superjson": "^2.2.1"
-  },
+  "dependencies": {},
   "packageManager": "npm@10.2.4",
   "author": "Emad Emami",
   "license": "ISC"
