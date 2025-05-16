@@ -1,21 +1,24 @@
 {
-  "extends":"../../tsconfig.json",
+  "extends": "../../tsconfig.json",
+  "include": ["**/*", "**/.server/**/*", "**/.client/**/*", ".react-router/types/**/*"],
   "compilerOptions": {
-    "types": ["node", "jest", "@testing-library/jest-dom"],
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "types": ["node", "vite/client"],
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "rootDirs": [".", "./.react-router/types"],
+    "baseUrl": ".",
+    "paths": {
+      "@CS/web/*": ["src/*"],
+      "@CS/web/types/*": [".react-router/types/*"]
+    },
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "verbatimModuleSyntax": true,
+    "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-  },
-  "include": [ "**/*.ts", "**/*.tsx"],
+    "skipLibCheck": true,
+    "strict": true
+  }
 }

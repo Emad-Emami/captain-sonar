@@ -10,6 +10,14 @@
       "persistent": true,
       "cache": false
     },
+    "build": {
+      "persistent": true,
+      "cache": false
+    },
+    "start": {
+      "persistent": true,
+      "cache": false
+    },
     "generate": {
       "persistent": true,
       "cache": false

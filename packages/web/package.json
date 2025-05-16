@@ -1,21 +1,12 @@
 {
   "name": "@cs/web",
-  "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev -p 3001",
-    "build": "next build",
-    "start": "next start",
-    "check-types": "tsc --noEmit",
-    "lint": "next lint && npm run lint:stylelint",
-    "lint:stylelint": "stylelint '**/*.css' --cache",
-    "jest": "jest",
-    "jest:watch": "jest --watch",
-    "prettier:check": "prettier --check \"**/*.{ts,tsx}\"",
-    "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",
-    "test": "npm run prettier:check && npm run lint && npm run check-types && npm run jest",
-    "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
     "@mantine/core": "^7.13.5",
@@ -23,19 +14,21 @@
     "@mantine/hooks": "^7.13.5",
     "@mantine/nprogress": "^7.13.5",
     "@tabler/icons-react": "^3.14.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "@react-router/node": "^7.5.3",
+    "@react-router/serve": "^7.5.3",
+    "isbot": "^5.1.27",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router": "^7.5.3"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^8.2.9",
-    "@storybook/addon-styling-webpack": "^1.0.0",
-    "@storybook/blocks": "^8.2.9",
-    "@storybook/react": "^8.2.9",
+    "@react-router/dev": "^7.5.3",
+    "@types/node": "^20",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
     "postcss": "^8.4.45",
     "postcss-preset-mantine": "1.17.0",
     "postcss-simple-vars": "^7.0.1",
-    "storybook": "^8.2.9",
-    "storybook-dark-mode": "^4.0.2",
     "stylelint": "^16.9.0",
     "stylelint-config-standard-scss": "^13.1.0"
   }

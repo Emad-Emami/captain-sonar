@@ -1,20 +1,19 @@
 {
-    "compilerOptions": {
-      "target": "esnext",
-      "module": "esnext",
-      "moduleResolution": "node",
-      "esModuleInterop": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "outDir": "dist",
-      "baseUrl": ".",
-      "paths": {
-        "@CS/web/*": ["packages/web/*"],
-        "@CS/server/*": ["packages/server/src/*"],
-        "@CS/config": ["config"],
-      }
-    },
-    "include": ["packages", "config.ts"],
-    "exclude": ["node_modules", "**/node_modules", "./dist"]
-  }
-  
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@CS/web/*": ["@CS/web/src/*"],
+      "@CS/server/*": ["packages/server/src/*"],
+      "@CS/config": ["config"]
+    }
+  },
+  "include": ["packages", "config.ts", "eslint.config.js"],
+  "exclude": ["node_modules", "**/node_modules", "./dist"]
+}
