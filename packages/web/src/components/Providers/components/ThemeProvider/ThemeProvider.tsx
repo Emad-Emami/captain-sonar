@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { cssVariableResolver, theme } from "@CS/web/theme";
 import { DEFAULT_COLOR_SCHEME } from "@CS/web/theme/theme.constants";

@@ -1,10 +1,10 @@
-import { ThemeProvider } from "@CS/web/components/Providers/components/ThemeProvider";
+import Providers from "@CS/web/components/Providers";
 import { Outlet } from "react-router";
 
 export default function Root() {
   return (
-    <ThemeProvider>
+    <Providers>
       <Outlet />
-    </ThemeProvider>
+    </Providers>
   );
 }

@@ -9,6 +9,7 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@auth0/auth0-react":"2.3.0",
     "@mantine/core": "^7.13.5",
     "@mantine/form": "^7.13.5",
     "@mantine/hooks": "^7.13.5",

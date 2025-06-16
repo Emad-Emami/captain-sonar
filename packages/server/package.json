@@ -8,7 +8,7 @@
     "dev:wss": "tsx --env-file=.env ./src/system/ws/ws.ts"
   },
   "dependencies": {
-    "@prisma/client": "^5.20.0",
+    "@prisma/client": "^6.8.2",
     "lodash-es": "^4.17.21",
     "redis": "^4.7.0",
     "ws": "^8.18.0",

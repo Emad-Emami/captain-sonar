@@ -9,9 +9,9 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@CS/web/*": ["@CS/web/src/*"],
+      "@CS/web/*": ["packages/web/src/*"],
       "@CS/server/*": ["packages/server/src/*"],
-      "@CS/config": ["config"]
+      "@CS/db/*": ["packages/db/*"]
     }
   },
   "include": ["packages", "config.ts", "eslint.config.js"],

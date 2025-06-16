@@ -1,4 +1,6 @@
 import { isRouteErrorResponse } from "react-router";
+import { Button, Code, Container, Group, Title } from "@mantine/core";
+import classes from "@CS/web/routes/Root/Root.errorBoundry.module.css";
 import type { Route } from "../../+types/root";
 
 export function RootErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -15,14 +17,19 @@ export function RootErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
+    <main className={classes.root}>
+      <Container>
+        <div className={classes.label}>{message}</div>
+        <Title className={classes.title}>{details}</Title>
+        <Code ta="center" className={classes.description}>
+          {stack}
+        </Code>
+        <Group justify="center">
+          <Button variant="white" size="md">
+            Refresh the page
+          </Button>
+        </Group>
+      </Container>
     </main>
   );
 }

@@ -20,7 +20,7 @@
     "lint": "eslint --ext \".js,.ts,.tsx\" --report-unused-disable-directives */*.ts"
   },
   "workspaces": [
-    "@CS/web",
+    "packages/web",
     "packages/server",
     "packages/db"
   ],
@@ -64,7 +64,7 @@
     "wait-port": "^1.1.0"
   },
   "imports": {
-    "@CS/web": "./@CS/web/*",
+    "@CS/web": "./packages/web/*",
     "@CS/server": "./packages/server/src/*",
     "@CS/db": "./packages/db/*"
   },
