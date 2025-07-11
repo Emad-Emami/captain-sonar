@@ -1,5 +1,5 @@
 # Table of contents
 
 * [Page](README.md)
-* [About](about.md)
+* [Routes](routes.md)
 * [Tech stack](tech-stack.md)

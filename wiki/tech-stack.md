@@ -1,3 +1,7 @@
+---
+icon: computer
+---
+
 # Tech stack
 
 The Captain Sonar project is a full-stack monorepo that leverages modern technologies for both frontend and backend development, as well as database management and developer tooling.
