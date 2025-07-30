@@ -2,11 +2,7 @@
 icon: chess-board
 ---
 
-# Captain Sonar board game rules
-
-Okay, here is a summary of the Captain Sonar rulebook, formatted in Markdown:
-
-## Captain Sonar Rulebook Summary
+# Board Game Rulebook
 
 ### Game Overview
 

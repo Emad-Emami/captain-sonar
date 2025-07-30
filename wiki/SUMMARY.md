@@ -1,5 +1,5 @@
 # Table of contents
 
-* [Captain Sonar board game rules](README.md)
+* [Board Game Rulebook](README.md)
 * [Routes](routes.md)
 * [Tech stack](tech-stack.md)
